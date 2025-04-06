@@ -40,4 +40,5 @@ Improve dashboard UI/UX and add historical data logging
 
 Add support for Modbus/industrial protocol gateways
 
-![Capture](https://github.com/user-attachments/assets/4cc28c5d-9d96-4751-9d79-f2d37cf31053)
+![Capture](https://github.com/user-attachments/assets/a579f90a-67e4-44cd-bc88-188ae57c0fa9)
+
