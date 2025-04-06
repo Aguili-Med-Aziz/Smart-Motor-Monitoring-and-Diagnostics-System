@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Motor Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { margin: 0; font-family: sans-serif; background: #f5f5f5; }
+    .sidebar {
+      height: 100vh;
+      width: 200px;
+      position: fixed;
+      background-color: #1a202c;
+      color: white;
+      padding-top: 20px;
+    }
+    .sidebar a {
+      display: block;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+    }
+    .sidebar a:hover { background-color: #2d3748; }
+    .main {
+      margin-left: 210px;
+      padding: 20px;
+    }
+    canvas {
+      max-width: 400px;
+      max-height: 200px;
+      margin: 10px;
+      background: white;
+      border: 1px solid #ccc;
+    }
+    .charts {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+    .notification {
+      background: #ffdddd;
+      color: #900;
+      padding: 10px;
+      margin-bottom: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h3 style="padding-left: 20px;">📊 Dashboard</h3>
+    <a href="#voltage">Voltage</a>
+    <a href="#current">Current</a>
+    <a href="#temperature">Temperature</a>
+    <a href="#vibration">Vibration</a>
+  </div>
+  <div class="main">
+    <div id="notification" class="notification"></div>
+    <div class="charts">
+      <canvas id="voltageChart"></canvas>
+      <canvas id="currentChart"></canvas>
+      <canvas id="tempChart"></canvas>
+      <canvas id="vibrationChart"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const voltageData = [];
+    const currentData = [];
+    const tempData = [];
+    const vibrationData = [];
+    const labels = [];
+
+    function createChart(ctxId, label, color, data) {
+      return new Chart(document.getElementById(ctxId).getContext('2d'), {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{ label, data, borderColor: color, tension: 0.3 }]
+        },
+        options: {
+          scales: { y: { beginAtZero: true } },
+          responsive: false
+        }
+      });
+    }
+
+    const voltageChart = createChart('voltageChart', 'Voltage (V)', 'blue', voltageData);
+    const currentChart = createChart('currentChart', 'Current (A)', 'green', currentData);
+    const tempChart = createChart('tempChart', 'Temperature (°C)', 'red', tempData);
+    const vibrationChart = createChart('vibrationChart', 'Vibration (g)', 'purple', vibrationData);
+
+    function checkAlerts() {
+      const notif = document.getElementById('notification');
+      if (tempData[tempData.length - 1] > 70 || vibrationData[vibrationData.length - 1] > 1.5) {
+        notif.style.display = 'block';
+        notif.innerText = '⚠️ Warning: Abnormal temperature or vibration detected!';
+      } else {
+        notif.style.display = 'none';
+      }
+    }
+
+    // Simulate incoming data (replace with real sensor input)
+    setInterval(() => {
+      if (labels.length > 20) labels.shift();
+      const t = new Date().toLocaleTimeString();
+      labels.push(t);
+      voltageData.push(Math.random() * 420);
+      currentData.push(Math.random() * 10);
+      tempData.push(40 + Math.random() * 40);
+      vibrationData.push(Math.random() * 2);
+
+      [voltageChart, currentChart, tempChart, vibrationChart].forEach(c => c.update());
+      checkAlerts();
+    }, 2000);
+  </script>
+</body>
+</html>
