@@ -1,5 +1,18 @@
 # Smart-Motor-Monitoring-and-Diagnostics-System
 Overview
+This project implements a complete smart monitoring solution for a 3-phase motor system using an Arduino microcontroller. The goal is to track voltage, current, vibration, and temperature to provide early diagnostics and preventative maintenance alerts. The system includes:
+
+Voltage Measurement (up to 420V AC)
+
+Current Measurement (non-invasive)
+
+Temperature Sensing
+
+Vibration and Motion Monitoring
+
+Data Logging and IoT Dashboard for Real-Time Monitoring
+
+
 ![PNG](https://github.com/user-attachments/assets/76be1d0d-30d1-46dc-af1a-5a05d0f93156)
 
 This project implements a complete smart monitoring solution for a 3-phase motor system using an Arduino microcontroller. The goal is to track voltage, current, vibration, and temperature to provide early diagnostics and preventative maintenance alerts. The system includes:
